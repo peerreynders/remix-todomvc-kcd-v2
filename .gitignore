@@ -1,0 +1,16 @@
+# dependencies
+node_modules
+
+# remix build
+/.cache
+/build
+/public/build
+
+# system Files
+.DS_Store
+
+# logs
+*.log*
+
+# environment variables
+.env
