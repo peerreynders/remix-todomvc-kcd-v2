@@ -3,10 +3,20 @@ After some initial exploration of [Remix](https://remix.run/) through the [Jokes
 
 This lead to the (development-only) variation presented here. The optimistic UI logic was segregated into the [`to-be-todos.ts`](./app/lib/to-be-todos.ts) module which simplified the [`new-todo.tsx`](./app/components/new-todo.tsx) and [`todo-item.tsx`](./app/components/todo-item.tsx) components.
 
-(CSS handling is loosely based on conventions found in [BEMIT](https://csswizardry.com/2015/08/bemit-taking-the-bem-naming-convention-a-step-further/) and [CSS guide lines](https://cssguidelin.es/#javascript-hooks))
+(CSS handling is loosely based on conventions found in [BEMIT](https://csswizardry.com/2015/08/bemit-taking-the-bem-naming-convention-a-step-further/) and [CSS guide lines](https://cssguidelin.es/#javascript-hooks).)
 
-**Note**: The in-memory server side store re-seeds itself whenever the `todos-persisted.json` file cannot be found. To function [`SESSION_SECRET`](./.env.example) has to be set in the `.env` file. To see the optimistic UI in action enable [the delay](https://github.com/peerreynders/remix-todomvc-kcd-v2/blob/2564ac2ce5aff4be3d374a6e6acf1f0c36f43b4f/app/routes/todos.tsx#L194-L197).
+**Note**: The in-memory server side store re-seeds itself whenever the `todos-persisted.json` file cannot be found. To function [`SESSION_SECRET`](./.env.example) has to be set in the `.env` file. To see the optimistic UI in action enable the server delay:
+```typescript
+// …in app/routes/todos.tsx
 
+const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+export async function action({ request }: DataFunctionArgs) {
+  await delay(2000);
+  const formData = await request.formData(); 
+```
+
+---
 ```shell
 $ cd remix-todomvc-kcd-v2
 $ npm i
