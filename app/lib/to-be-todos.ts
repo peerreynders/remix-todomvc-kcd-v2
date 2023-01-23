@@ -383,8 +383,6 @@ function filterTodos(
     if (keepFn(todo)) {
       todos.push(todo);
       if (!visible.has(todo.id)) hiddenIds.add(todo.id);
-    } else {
-      visible.delete(todo.id);
     }
     return todos;
   };
